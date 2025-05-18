@@ -1,0 +1,121 @@
+Configuración de SSH en la Máquina Virtual (VM)
+El acceso por SSH te permite conectarte a la máquina virtual de manera remota desde cualquier computadora del equipo. Esto es ideal si cada miembro tiene una máquina diferente y desea conectarse a la misma máquina virtual.
+
+Paso 1: Instalar y configurar el servidor SSH en la VM
+Abre la terminal de la máquina virtual Debian.
+
+Actualiza el sistema:
+
+bash
+Copiar
+Editar
+sudo apt update
+sudo apt upgrade -y
+Instala el servidor SSH:
+
+bash
+Copiar
+Editar
+sudo apt install openssh-server
+Asegúrate de que el servicio SSH esté habilitado y en ejecución:
+
+bash
+Copiar
+Editar
+sudo systemctl enable ssh
+sudo systemctl start ssh
+Esto permitirá que el servicio SSH se inicie automáticamente al arrancar la máquina virtual y que esté disponible para las conexiones.
+
+Paso 2: Verificar la dirección IP de la máquina virtual
+Para que los demás miembros del equipo puedan conectarse a la máquina virtual, deben conocer la dirección IP de la VM. Puedes obtenerla usando el siguiente comando:
+
+bash
+Copiar
+Editar
+ip a
+Busca la interfaz de red correspondiente (generalmente eth0 o ens33 si estás usando NAT o modo puente) y localiza la dirección IP, que estará en un formato como 192.168.x.x.
+
+Paso 3: Configuración de la red en VirtualBox
+Asegúrate de que la máquina virtual tenga acceso a la red para que pueda ser accesible desde otras máquinas. Para esto, debes configurar la red en VirtualBox:
+
+Selecciona tu máquina virtual en VirtualBox.
+
+Haz clic en Configuración > Red.
+
+En el adaptador de red, selecciona Adaptador puente o NAT, dependiendo de tus necesidades.
+
+Adaptador puente: Te permite usar la red local (más recomendado si estás en una red LAN local).
+
+NAT: Permite que la VM tenga acceso a internet a través del host, pero requiere configuración adicional para acceder desde otras máquinas.
+
+Nota: Si eliges NAT, necesitarás configurar un reenvío de puertos para permitir que otros miembros del equipo se conecten a tu VM.
+
+Paso 4: Conectarse a la máquina virtual por SSH
+Una vez configurado el servicio SSH y obtenido la IP de la VM, los miembros del equipo podrán conectarse desde sus máquinas locales. Para ello, deben usar el siguiente comando SSH desde la terminal de su sistema host:
+
+bash
+Copiar
+Editar
+ssh usuario@ip_de_la_vm
+usuario: El nombre de usuario que creaste en la máquina virtual.
+
+ip_de_la_vm: La dirección IP que obtuviste en el paso anterior.
+
+Si nunca han conectado antes, recibirán una advertencia sobre la autenticidad del host. Solo tienen que confirmar (teclear yes).
+
+2. Configuración de Carpetas Compartidas en VirtualBox
+Las carpetas compartidas en VirtualBox permiten que puedas compartir archivos entre tu host (el sistema operativo de tu computadora) y la máquina virtual. Esto es útil para que varios miembros del equipo puedan compartir y modificar archivos sin necesidad de copiar manualmente.
+
+Paso 1: Crear una carpeta compartida en el host
+En tu máquina host, crea una carpeta que quieras compartir con la máquina virtual. Por ejemplo:
+
+bash
+Copiar
+Editar
+mkdir /home/usuario/compartido
+Paso 2: Configuración de la carpeta compartida en VirtualBox
+Abre VirtualBox y selecciona tu máquina virtual.
+
+Ve a Configuración > Carpetas compartidas.
+
+Haz clic en el icono de Agregar carpeta (icono de carpeta con el signo +).
+
+Selecciona la carpeta que creaste en el paso anterior y marca la opción Auto-montar.
+
+Además, marca la opción Hacer permanente si quieres que la carpeta se mantenga disponible incluso después de reiniciar la máquina virtual.
+
+Paso 3: Acceder a la carpeta compartida desde la máquina virtual
+Una vez que la máquina virtual esté encendida y configurada, monta la carpeta compartida. En la máquina virtual, deberías poder encontrar la carpeta en el directorio /media/sf_NombreDeLaCarpeta. Si no está montada automáticamente, puedes montarla manualmente:
+
+Primero, asegúrate de que el paquete virtualbox-guest-utils esté instalado en la VM:
+
+bash
+Copiar
+Editar
+sudo apt install virtualbox-guest-utils
+Luego, monta la carpeta:
+
+bash
+Copiar
+Editar
+sudo mount -t vboxsf NombreDeLaCarpeta /ruta/de/montaje
+Aquí, NombreDeLaCarpeta es el nombre de la carpeta que seleccionaste en VirtualBox y /ruta/de/montaje es el directorio donde deseas montar la carpeta (puedes crear una carpeta en /mnt o en otro lugar).
+
+Paso 4: Acceder a la carpeta compartida en otras máquinas
+Si varios miembros del equipo van a compartir archivos, cada uno debe realizar la misma configuración de carpeta compartida y conexión SSH para poder acceder a los mismos archivos y colaborar en tiempo real.
+
+3. Conexión y Trabajo Colaborativo en la Máquina Virtual
+Trabajo en paralelo: Todos pueden conectarse por SSH y trabajar en la misma máquina virtual. Pueden usar un sistema de control de versiones como Git para compartir código y archivos, o simplemente editar y compilar directamente en el sistema de archivos compartido.
+
+Sincronización de tareas: Si estás usando Git, cada miembro puede trabajar en una rama diferente y luego fusionar los cambios en la rama principal. Usar Git te permite gestionar las tareas y evitar que alguien sobrescriba el trabajo de otro.
+
+Resumen de los Pasos:
+Instalar y configurar SSH en la VM para que varios miembros del equipo puedan conectarse remotamente a la misma máquina virtual.
+
+Configurar la red en VirtualBox para asegurarte de que la VM sea accesible desde otros dispositivos.
+
+Configurar carpetas compartidas en VirtualBox para facilitar el intercambio de archivos entre el host y la máquina virtual (o entre miembros si están trabajando en máquinas virtuales diferentes).
+
+Conexión remota por SSH para permitir que todos los miembros trabajen en la misma máquina virtual de manera paralela.
+
+Con esto, podrán trabajar de manera eficiente en paralelo, cada uno desde su computadora, conectándose a la máquina virtual y compartiendo archivos a través de carpetas compartidas.
