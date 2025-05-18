@@ -6,22 +6,16 @@ Abre la terminal de la máquina virtual Debian.
 
 Actualiza el sistema:
 
-bash
-Copiar
-Editar
+
 sudo apt update
 sudo apt upgrade -y
 Instala el servidor SSH:
 
-bash
-Copiar
-Editar
+
 sudo apt install openssh-server
 Asegúrate de que el servicio SSH esté habilitado y en ejecución:
 
-bash
-Copiar
-Editar
+
 sudo systemctl enable ssh
 sudo systemctl start ssh
 Esto permitirá que el servicio SSH se inicie automáticamente al arrancar la máquina virtual y que esté disponible para las conexiones.
@@ -29,9 +23,7 @@ Esto permitirá que el servicio SSH se inicie automáticamente al arrancar la m�
 Paso 2: Verificar la dirección IP de la máquina virtual
 Para que los demás miembros del equipo puedan conectarse a la máquina virtual, deben conocer la dirección IP de la VM. Puedes obtenerla usando el siguiente comando:
 
-bash
-Copiar
-Editar
+
 ip a
 Busca la interfaz de red correspondiente (generalmente eth0 o ens33 si estás usando NAT o modo puente) y localiza la dirección IP, que estará en un formato como 192.168.x.x.
 
@@ -53,9 +45,7 @@ Nota: Si eliges NAT, necesitarás configurar un reenvío de puertos para permiti
 Paso 4: Conectarse a la máquina virtual por SSH
 Una vez configurado el servicio SSH y obtenido la IP de la VM, los miembros del equipo podrán conectarse desde sus máquinas locales. Para ello, deben usar el siguiente comando SSH desde la terminal de su sistema host:
 
-bash
-Copiar
-Editar
+
 ssh usuario@ip_de_la_vm
 usuario: El nombre de usuario que creaste en la máquina virtual.
 
@@ -69,9 +59,7 @@ Las carpetas compartidas en VirtualBox permiten que puedas compartir archivos en
 Paso 1: Crear una carpeta compartida en el host
 En tu máquina host, crea una carpeta que quieras compartir con la máquina virtual. Por ejemplo:
 
-bash
-Copiar
-Editar
+
 mkdir /home/usuario/compartido
 Paso 2: Configuración de la carpeta compartida en VirtualBox
 Abre VirtualBox y selecciona tu máquina virtual.
@@ -89,15 +77,11 @@ Una vez que la máquina virtual esté encendida y configurada, monta la carpeta 
 
 Primero, asegúrate de que el paquete virtualbox-guest-utils esté instalado en la VM:
 
-bash
-Copiar
-Editar
+
 sudo apt install virtualbox-guest-utils
 Luego, monta la carpeta:
 
-bash
-Copiar
-Editar
+
 sudo mount -t vboxsf NombreDeLaCarpeta /ruta/de/montaje
 Aquí, NombreDeLaCarpeta es el nombre de la carpeta que seleccionaste en VirtualBox y /ruta/de/montaje es el directorio donde deseas montar la carpeta (puedes crear una carpeta en /mnt o en otro lugar).
 
