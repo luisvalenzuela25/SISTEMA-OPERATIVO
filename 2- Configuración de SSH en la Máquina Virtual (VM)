@@ -1,4 +1,4 @@
-Configuración de SSH en la Máquina Virtual (VM)
+paso 1: Configuración de SSH en la Máquina Virtual (VM)
 El acceso por SSH te permite conectarte a la máquina virtual de manera remota desde cualquier computadora del equipo. Esto es ideal si cada miembro tiene una máquina diferente y desea conectarse a la misma máquina virtual.
 
 Paso 1: Instalar y configurar el servidor SSH en la VM
