@@ -1,0 +1,36 @@
+instalar virtualbox
+instalar iso de debian
+crear maquina virtual de debian en virtualbox
+preparar actualizandolo
+---
+sudo apt update
+sudo apt upgrade -y
+---
+
+1-Agregar tu usuario al grupo sudo
+La forma más común y recomendada es agregar tu usuario al grupo sudo, de modo que pueda ejecutar comandos como si fuera root sin necesidad de cambiar al usuario root directamente. Esta es la opción más segura porque no estás cambiando el tipo de usuario, sino que simplemente otorgas permisos de administrador.
+
+Inicia sesión como root o un usuario que ya tenga privilegios sudo:
+
+
+su -
+
+ó
+
+sudo -i
+
+2-Agrega tu usuario al grupo sudo:
+Supongamos que tu usuario se llama usuario_normal. Ejecuta el siguiente comando:
+
+
+
+usermod -aG sudo usuario_normal
+Esto agrega a usuario_normal al grupo sudo, lo que le permite ejecutar comandos con privilegios de root mediante sudo.
+
+3-Cierra la sesión y vuelve a iniciarla para que los cambios surtan efecto. Ahora, podrás ejecutar comandos como root con:
+
+
+sudo <comando>
+
+
+sudo apt update
